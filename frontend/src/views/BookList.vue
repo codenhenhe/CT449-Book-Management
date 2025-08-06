@@ -34,10 +34,15 @@
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Tên sách: {{ book.tenSach }}</h5>
             <p class="card-text">Thể loại: {{ book.tenTheLoai }}</p>
-            <p class="card-text">Mã tác giả: {{ book.maTacGia }}</p>
+            <p class="card-text">
+              Tác giả: {{ book.maTacGia?.tenTacGia || "Không rõ" }}
+            </p>
             <p class="card-text">Đơn giá: {{ book.donGia }}</p>
             <!-- <p class="card-text">Tổng số sách: {{ book.tongSoSach }}</p> -->
             <p class="card-text">Số lượng còn lại: {{ book.soQuyenConLai }}</p>
+            <p class="card-text">
+              Nhà xuất bản: {{ book.maNXB?.tenNXB || "Không rõ" }}
+            </p>
             <p class="card-text">Năm xuất bản: {{ book.namXuatBan }}</p>
 
             <div class="mt-auto d-flex justify-content-center flex-wrap">
@@ -82,6 +87,7 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
 import BookService from "@/services/book.service";
+import BorrowService from "@/services/borrow.service";
 
 const books = ref([]);
 const router = useRouter();
@@ -96,9 +102,14 @@ onMounted(async () => {
   }
 });
 
-function handleBorrow(book) {
+async function handleBorrow(book) {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  // if (!user || !user._id) {
+  //   alert("Không thể xác định độc giả. Vui lòng đăng nhập lại.");
+  //   return;
+  // }
 
   if (!token || !user || user.vaiTro !== "docgia") {
     Swal.fire({
@@ -116,13 +127,38 @@ function handleBorrow(book) {
     return;
   }
 
-  Swal.fire({
-    icon: "success",
-    title: "Đã chọn mượn",
-    text: `📚 Bạn đã chọn mượn sách: ${book.tenSach}`,
-  });
+  try {
+    const today = new Date();
+    const pickupDate = new Date();
+    pickupDate.setDate(today.getDate() + 2); // Ngày lấy sách dự kiến sau 2 ngày
 
-  // TODO: Gọi API mượn sách tại đây nếu cần
+    const data = {
+      maDocGia: user.id,
+      maSach: book._id,
+      ngayDatSach: today,
+      ngayLaySachDuKien: pickupDate,
+    };
+
+    // console.log("📤 Dữ liệu gửi đi:", data);
+
+    await BorrowService.create(data);
+
+    Swal.fire({
+      icon: "success",
+      title: "Đã đặt mượn",
+      text: `📚 Bạn đã đặt mượn sách: ${book.tenSach}`,
+    });
+
+    // Cập nhật lại số sách còn lại
+    book.soQuyenConLai -= 1;
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      icon: "error",
+      title: "Lỗi",
+      text: err?.response?.data?.message || "Không thể mượn sách.",
+    });
+  }
 }
 
 async function confirmDelete(book) {

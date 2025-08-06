@@ -42,7 +42,7 @@ const bookSchema = new Schema({
     required: false,
   },
   maTacGia: {
-    type: String,
+    type: Schema.Types.ObjectId,
     ref: Author,
     required: false,
   },

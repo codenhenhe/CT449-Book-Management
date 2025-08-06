@@ -36,8 +36,8 @@ const borrowSchema = new Schema({
   },
   trangThai: {
     type: String,
-    enum: ["cho_lay", "da_lay", "da_tra"],
-    default: "cho_lay",
+    enum: ["cholay", "dalay", "datra", "hethan", "dahuy"],
+    default: "cholay",
     required: true,
   },
   ghiChu: {

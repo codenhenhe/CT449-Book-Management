@@ -125,19 +125,6 @@ const routes = [
         component: () => import("@/views/categories/CategoryList.vue"),
         meta: requireAuth(["quantrivien", "nhanvien"]),
       },
-      // {
-      //   path: "add",
-      //   name: "categories.add",
-      //   component: () => import("@/views/categories/AddCategory.vue"),
-      //   meta: requireAuth(["quantrivien", "nhanvien"]),
-      // },
-      // {
-      //   path: "edit/:id",
-      //   name: "categories.edit",
-      //   component: () => import("@/views/categories/EditCategory.vue"),
-      //   props: true,
-      //   meta: requireAuth(["quantrivien", "nhanvien"]),
-      // },
     ],
   },
 
@@ -149,6 +136,30 @@ const routes = [
         name: "authors",
         component: () => import("@/views/author/AuthorList.vue"),
         meta: requireAuth(["quantrivien", "nhanvien"]),
+      },
+    ],
+  },
+
+  {
+    path: "/publishers",
+    children: [
+      {
+        path: "",
+        name: "publishers",
+        component: () => import("@/views/PublisherList.vue"),
+        meta: requireAuth(["quantrivien", "nhanvien"]),
+      },
+    ],
+  },
+
+  {
+    path: "/borrows",
+    children: [
+      {
+        path: "",
+        name: "borrows",
+        component: () => import("@/views/reader/BorrowHistory.vue"),
+        meta: requireAuth(["docgia"]),
       },
     ],
   },

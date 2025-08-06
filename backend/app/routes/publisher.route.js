@@ -1,29 +1,38 @@
 import express from "express";
-import * as bookController from "../controllers/book.controller.js";
+import * as PublisherController from "../controllers/publisher.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { verifyRole } from "../middlewares/verifyRole.middleware.js";
 
 const router = express.Router();
 
-router.route("/").get(bookController.getAllBooks);
 router
-  .route("/add")
+  .route("/")
+  .get(
+    verifyToken,
+    verifyRole(["quantrivien", "nhanvien"]),
+    PublisherController.getAll
+  )
   .post(
     verifyToken,
     verifyRole(["quantrivien", "nhanvien"]),
-    bookController.createNewBook
+    PublisherController.create
   );
 router
   .route("/:id")
-  .get(bookController.getBookByID)
-  .delete(
+  .get(
     verifyToken,
     verifyRole(["quantrivien", "nhanvien"]),
-    bookController.deleteBookService
+    PublisherController.getById
   )
   .put(
     verifyToken,
     verifyRole(["quantrivien", "nhanvien"]),
-    bookController.updateBookService
+    PublisherController.update
+  )
+  .delete(
+    verifyToken,
+    verifyRole(["quantrivien", "nhanvien"]),
+    PublisherController.remove
   );
+
 export default router;

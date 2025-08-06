@@ -40,5 +40,5 @@ export const updateBook = async (bookId, updateData) => {
 };
 
 export const getAll = async () => {
-  return await Book.find();
+  return await Book.find().populate("maTacGia").populate("maNXB");
 };

@@ -4,7 +4,7 @@ module.exports.getAuthorByName = async (name) => {
   if (typeof name !== "string") return null;
 
   return await Author.findOne({
-    tenTacGia: { $regex: `^${name}$`, $options: "i" }, // ^$ để khớp chính xác toàn bộ chuỗi
+    tenTacGia: { $regex: `^${name}$`, $options: "i" },
   });
 };
 

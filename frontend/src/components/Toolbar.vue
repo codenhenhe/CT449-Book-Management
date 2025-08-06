@@ -25,6 +25,13 @@
         :collapsed="collapsed"
       />
       <SidebarItem
+        v-if="isReader"
+        icon="fa-book"
+        text="Quản lý mượn sách"
+        to="/borrows"
+        :collapsed="collapsed"
+      />
+      <SidebarItem
         icon="fa-book"
         text="Tất cả sách"
         to="/books"
@@ -51,6 +58,13 @@
         to="/authors"
         :collapsed="collapsed"
       />
+      <SidebarItem
+        v-if="isStaffOrAdmin"
+        icon="fa-print"
+        text="Nhà xuất bản"
+        to="/publishers"
+        :collapsed="collapsed"
+      />
     </nav>
   </aside>
 </template>
@@ -67,6 +81,8 @@ const isStaffOrAdmin = computed(() =>
   ["quantrivien", "nhanvien"].includes(auth.user?.vaiTro)
 );
 
+const isReader = computed(() => ["docgia"].includes(auth.user?.vaiTro));
+
 const homeRoute = computed(() => {
   switch (auth.user?.vaiTro) {
     case "quantrivien":
@@ -74,7 +90,7 @@ const homeRoute = computed(() => {
     case "nhanvien":
       return "/staff";
     case "docgia":
-      return "/reader";
+      return "/books";
     default:
       return "/";
   }
