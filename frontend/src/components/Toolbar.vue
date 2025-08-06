@@ -1,87 +1,79 @@
 <template>
-  <aside
-    :class="[
-      'sidebar bg-dark text-white d-flex flex-column shadow',
-      { collapsed },
-    ]"
+  <nav
+    class="toolbar bg-dark text-white d-flex align-items-center justify-content-center shadow"
   >
-    <!-- Nút thu gọn -->
-    <div class="toggle-container">
-      <button
-        class="btn btn-outline-light btn-sm"
-        @click="collapsed = !collapsed"
-        :title="collapsed ? 'Mở rộng' : 'Thu gọn'"
-      >
-        <i :class="collapsed ? 'fas fa-angle-right' : 'fas fa-angle-left'"></i>
-      </button>
-    </div>
-
-    <!-- Menu items -->
-    <nav class="nav flex-column flex-grow-1">
-      <SidebarItem
-        icon="fa-home"
-        text="Trang chủ"
-        :to="homeRoute"
-        :collapsed="collapsed"
-      />
-      <SidebarItem
-        v-if="isReader"
-        icon="fa-book"
-        text="Quản lý mượn sách"
-        to="/borrows"
-        :collapsed="collapsed"
-      />
-      <SidebarItem
-        icon="fa-book"
-        text="Tất cả sách"
-        to="/books"
-        :collapsed="collapsed"
-      />
-      <SidebarItem
-        v-if="isStaffOrAdmin"
-        icon="fa-plus"
-        text="Thêm sách"
-        to="/books/add"
-        :collapsed="collapsed"
-      />
-      <SidebarItem
-        v-if="isStaffOrAdmin"
-        icon="fa-folder"
-        text="Thể loại"
-        to="/categories"
-        :collapsed="collapsed"
-      />
-      <SidebarItem
-        v-if="isStaffOrAdmin"
-        icon="fa-user-pen"
-        text="Tác giả"
-        to="/authors"
-        :collapsed="collapsed"
-      />
-      <SidebarItem
-        v-if="isStaffOrAdmin"
-        icon="fa-print"
-        text="Nhà xuất bản"
-        to="/publishers"
-        :collapsed="collapsed"
-      />
-    </nav>
-  </aside>
+    <SidebarItem
+      icon="fa-home"
+      text="Trang chủ"
+      :to="homeRoute"
+      :active="route.path === homeRoute"
+    />
+    <SidebarItem
+      v-if="isReader"
+      icon="fa-exchange-alt"
+      text="Lịch sử mượn sách"
+      to="/borrows"
+      :active="route.path === '/borrows'"
+    />
+    <SidebarItem
+      v-if="isStaffOrAdmin"
+      icon="fa-book"
+      text="Tất cả sách"
+      to="/books"
+      :active="route.path === '/books'"
+    />
+    <!-- <SidebarItem
+      v-if="isStaffOrAdmin"
+      icon="fa-plus"
+      text="Thêm sách"
+      to="/books/add"
+      :active="route.path === '/books/add'"
+    /> -->
+    <SidebarItem
+      v-if="isStaffOrAdmin"
+      icon="fa-folder"
+      text="Thể loại"
+      to="/categories"
+      :active="route.path === '/categories'"
+    />
+    <SidebarItem
+      v-if="isStaffOrAdmin"
+      icon="fa-user-pen"
+      text="Tác giả"
+      to="/authors"
+      :active="route.path === '/authors'"
+    />
+    <SidebarItem
+      v-if="isStaffOrAdmin"
+      icon="fa-print"
+      text="Nhà xuất bản"
+      to="/publishers"
+      :active="route.path === '/publishers'"
+    />
+    <SidebarItem
+      v-if="isStaff"
+      icon="fa-hand-holding"
+      text="Quản lý mượn sách"
+      to="/borrows/manager"
+      :active="route.path === '/borrows/manager'"
+    />
+  </nav>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import SidebarItem from "./SidebarItem.vue";
 import { useAuthStore } from "@/stores/auth";
 
-const collapsed = ref(false);
 const auth = useAuthStore();
+const route = useRoute();
 
 const isStaffOrAdmin = computed(() =>
   ["quantrivien", "nhanvien"].includes(auth.user?.vaiTro)
 );
-
-const isReader = computed(() => ["docgia"].includes(auth.user?.vaiTro));
+const isReader = computed(() => auth.user?.vaiTro === "docgia");
+const isStaff = computed(() => auth.user?.vaiTro === "nhanvien");
 
 const homeRoute = computed(() => {
   switch (auth.user?.vaiTro) {
@@ -98,38 +90,13 @@ const homeRoute = computed(() => {
 </script>
 
 <style scoped>
-.sidebar {
-  width: 220px;
-  min-height: 100vh;
-  transition: width 0.3s ease;
+.toolbar {
   position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.sidebar.collapsed {
-  width: 70px;
-  overflow-x: hidden;
-}
-
-.toggle-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 60px;
-  padding: 0 10px;
-}
-
-.sidebar.collapsed .toggle-container {
-  justify-content: center;
-}
-
-.logo-img {
-  width: 40px;
-  height: 40px;
-}
-
-.nav .nav-link {
+  top: 60px; /* hoặc chiều cao header */
+  z-index: 999;
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+  overflow-x: auto;
   white-space: nowrap;
 }
 </style>

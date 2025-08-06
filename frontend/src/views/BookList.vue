@@ -48,7 +48,7 @@
             <div class="mt-auto d-flex justify-content-center flex-wrap">
               <button
                 class="btn btn-primary mx-1 mb-2"
-                style="min-width: 250px"
+                style="min-width: 300px"
                 @click="handleBorrow(book)"
               >
                 Mượn sách
@@ -106,16 +106,11 @@ async function handleBorrow(book) {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
-  // if (!user || !user._id) {
-  //   alert("Không thể xác định độc giả. Vui lòng đăng nhập lại.");
-  //   return;
-  // }
-
   if (!token || !user || user.vaiTro !== "docgia") {
     Swal.fire({
       icon: "info",
       title: "Cần đăng nhập",
-      text: "Bạn cần đăng nhập với vai trò đọc giả để mượn sách.",
+      text: "Vui lòng đăng nhập với vai trò đọc giả.",
       showCancelButton: true,
       confirmButtonText: "Đăng nhập",
       cancelButtonText: "Hủy",
@@ -127,29 +122,70 @@ async function handleBorrow(book) {
     return;
   }
 
-  try {
-    const today = new Date();
-    const pickupDate = new Date();
-    pickupDate.setDate(today.getDate() + 2); // Ngày lấy sách dự kiến sau 2 ngày
+  const today = new Date();
+  const todayStr = today.toISOString().split("T")[0];
 
+  const maxDate = new Date();
+  maxDate.setDate(today.getDate() + 4);
+  const maxDateStr = maxDate.toISOString().split("T")[0];
+
+  const { value: formValues } = await Swal.fire({
+    title: `📅 Mượn sách: ${book.tenSach}`,
+    width: "700px",
+    html: `
+      <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div>
+          <label for="pickupDate" style="display: block; margin-bottom: 5px;">Ngày lấy sách (trong vòng 4 ngày):</label>
+          <input type="date" id="pickupDate" class="swal2-input" min="${todayStr}" max="${maxDateStr}" value="${todayStr}" required>
+        </div>
+        <div>
+          <label for="note" style="display: block; margin-bottom: 5px;">Ghi chú (tuỳ chọn):</label>
+          <textarea id="note" class="swal2-textarea" placeholder="Nhập ghi chú..." style="min-height: 100px; width: 90%;"></textarea>
+        </div>
+      </div>
+    `,
+    showCancelButton: true,
+    confirmButtonText: "Xác nhận",
+    cancelButtonText: "Hủy",
+    preConfirm: () => {
+      const pickupDateStr = document.getElementById("pickupDate").value;
+      const note = document.getElementById("note").value;
+
+      if (!pickupDateStr) {
+        Swal.showValidationMessage("Vui lòng chọn ngày lấy sách.");
+        return false;
+      }
+
+      const pickupDate = new Date(pickupDateStr);
+      const dayOfWeek = pickupDate.getDay();
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        Swal.showValidationMessage("Không chọn Thứ 7 hoặc Chủ nhật.");
+        return false;
+      }
+
+      return { pickupDate: pickupDateStr, note };
+    },
+  });
+
+  if (!formValues) return;
+
+  try {
     const data = {
       maDocGia: user.id,
       maSach: book._id,
       ngayDatSach: today,
-      ngayLaySachDuKien: pickupDate,
+      ngayLaySachDuKien: new Date(formValues.pickupDate),
+      ghiChu: formValues.note,
     };
-
-    // console.log("📤 Dữ liệu gửi đi:", data);
 
     await BorrowService.create(data);
 
     Swal.fire({
       icon: "success",
-      title: "Đã đặt mượn",
-      text: `📚 Bạn đã đặt mượn sách: ${book.tenSach}`,
+      title: "Đặt mượn thành công",
+      text: `📚 ${book.tenSach}`,
     });
 
-    // Cập nhật lại số sách còn lại
     book.soQuyenConLai -= 1;
   } catch (err) {
     console.error(err);

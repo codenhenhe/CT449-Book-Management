@@ -1,14 +1,12 @@
 <template>
   <router-link
     :to="to"
-    class="nav-link text-white d-flex align-items-center my-1"
-    :class="collapsed ? 'justify-content-center' : 'ps-3'"
-    :title="collapsed ? text : ''"
+    class="nav-link text-white d-flex align-items-center px-3 py-2"
+    :class="[active ? 'active-item' : '']"
+    :title="text"
   >
     <i :class="['fas', icon]"></i>
-    <template v-if="!collapsed">
-      <span class="ml-2">{{ text }}</span>
-    </template>
+    <span class="ml-2">{{ text }}</span>
   </router-link>
 </template>
 
@@ -17,23 +15,23 @@ defineProps({
   icon: String,
   text: String,
   to: String,
-  collapsed: Boolean,
+  active: Boolean,
 });
 </script>
 
 <style scoped>
 .nav-link {
-  height: 40px;
-  padding: 8px 16px;
   transition: all 0.2s ease;
+  border-radius: 5px;
 }
 
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
 }
 
-.nav-link .fas {
-  font-size: 18px;
+/* Mục đang active */
+.active-item {
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
 }
 </style>

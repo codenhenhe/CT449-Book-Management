@@ -12,6 +12,7 @@
           <th>Tên sách</th>
           <th>Ngày đặt</th>
           <th>Ngày lấy dự kiến</th>
+          <th>Ghi chú</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
@@ -21,6 +22,7 @@
           <td>{{ item.maSach?.tenSach || "Không rõ" }}</td>
           <td>{{ formatDate(item.ngayDatSach) }}</td>
           <td>{{ formatDate(item.ngayLaySachDuKien) }}</td>
+          <td>{{ item.ghiChu }}</td>
           <td>{{ formatStatus(item.trangThai) }}</td>
           <td>
             <button
@@ -49,6 +51,7 @@ user._id = user.id;
 onMounted(async () => {
   if (!user?._id) return;
   borrows.value = await BorrowService.getByUser(user._id);
+  console.log(borrows.value);
 });
 
 function formatDate(dateStr) {

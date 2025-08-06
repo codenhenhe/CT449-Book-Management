@@ -4,7 +4,7 @@
   >
     <!-- Logo -->
     <div
-      class="d-flex align-items-center ml-4"
+      class="d-flex align-items-center ml-5 p-2"
       style="cursor: pointer"
       @click="goHome"
     >
@@ -140,5 +140,10 @@ function handleLogout() {
 
 button {
   padding: 5px 10px;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 9;
 }
 </style>

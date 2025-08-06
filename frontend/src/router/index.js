@@ -161,6 +161,12 @@ const routes = [
         component: () => import("@/views/reader/BorrowHistory.vue"),
         meta: requireAuth(["docgia"]),
       },
+      {
+        path: "manager",
+        name: "borrows.manager",
+        component: () => import("@/views/staff/BorrowManager.vue"),
+        meta: requireAuth(["nhanvien"]),
+      },
     ],
   },
 

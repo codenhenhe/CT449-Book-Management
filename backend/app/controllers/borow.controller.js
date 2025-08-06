@@ -3,7 +3,8 @@ import Book from "../models/book.model.js";
 
 export const createBorrow = async (req, res) => {
   try {
-    const { maDocGia, maSach, ngayDatSach, ngayLaySachDuKien } = req.body;
+    const { maDocGia, maSach, ngayDatSach, ngayLaySachDuKien, ghiChu } =
+      req.body;
 
     if (!maDocGia || !maSach || !ngayDatSach || !ngayLaySachDuKien) {
       return res.status(400).json({ message: "Thiếu thông tin yêu cầu." });
@@ -29,6 +30,7 @@ export const createBorrow = async (req, res) => {
       maSach,
       ngayDatSach,
       ngayLaySachDuKien,
+      ghiChu,
       trangThai: "cholay",
     });
     await borrow.save();
@@ -62,4 +64,37 @@ export const cancel = async (req, res) => {
   });
 
   res.json({ message: "Đã huỷ lượt mượn" });
+};
+
+export const getAll = async (req, res) => {
+  try {
+    const borrows = await Borrow.find().populate("maSach").populate("maDocGia");
+    res.status(200).json(borrows);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi khi lấy danh sách mượn sách." });
+  }
+};
+
+export const updateStatus = async (req, res) => {
+  try {
+    // console.log("Body nhận được:");
+    // const trangThai = req.body.status;
+    // // console.log("Trạng thái nhận:", req.body.status);
+
+    // const allowedStatuses = ["cholay", "dalay", "datra", "hethan", "dahuy"];
+    // if (!allowedStatuses.includes(trangThai)) {
+    //   return res.status(400).json({ message: "Trạng thái không hợp lệ." });
+    // }
+
+    const updated = await Borrow.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (!updated) {
+      return res.status(404).json({ message: "Không tìm thấy đơn mượn." });
+    }
+
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).json({ message: "Cập nhật trạng thái thất bại." });
+  }
 };

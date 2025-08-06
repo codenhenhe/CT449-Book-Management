@@ -2,12 +2,13 @@
   <div id="app" class="d-flex flex-column min-vh-100">
     <AppHeader />
 
-    <div class="d-flex flex-grow-1 overflow-hidden">
-      <Toolbar />
-      <main class="flex-grow-1 overflow-auto p-3">
-        <router-view />
-      </main>
-    </div>
+    <!-- Toolbar chuyển thành thanh ngang -->
+    <Toolbar v-if="showToolbar" />
+
+    <!-- Nội dung chính -->
+    <main class="flex-grow-1 overflow-auto p-3">
+      <router-view />
+    </main>
 
     <AppFooter />
   </div>
@@ -23,6 +24,13 @@ export default {
     AppHeader,
     AppFooter,
     Toolbar,
+  },
+  computed: {
+    showToolbar() {
+      // Không hiển thị Toolbar nếu route là login hoặc register
+      const hiddenRoutes = ["/login", "/register"];
+      return !hiddenRoutes.includes(this.$route.path);
+    },
   },
 };
 </script>
