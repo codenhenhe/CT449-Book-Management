@@ -1,14 +1,12 @@
 <template>
-  <div
-    class="container my-4 my-md-5 d-flex align-items-center justify-content-center"
-  >
-    <div class="col-12 col-md-10 col-lg-8">
+  <div class="container my-4 d-flex align-items-center justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
       <div
-        class="card shadow-lg border-0 rounded-4 p-4 p-md-5 position-relative overflow-hidden"
+        class="card shadow-lg border-0 rounded-4 p-4 p-md-4 position-relative overflow-hidden"
       >
         <div class="card-bg-overlay"></div>
 
-        <header class="text-center mb-5 position-relative">
+        <header class="text-center mb-3 position-relative">
           <div class="user-avatar-container mx-auto mb-3">
             <font-awesome-icon
               icon="user-circle"
@@ -23,8 +21,8 @@
           </p>
         </header>
 
-        <section class="info-columns position-relative row g-4">
-          <div class="col-md-4 d-flex flex-column gap-4">
+        <section class="info-columns position-relative row g-3">
+          <div class="col-md-6 d-flex flex-column gap-3">
             <div class="info-item">
               <font-awesome-icon
                 icon="id-badge"
@@ -51,9 +49,6 @@
                 }}</span>
               </div>
             </div>
-          </div>
-
-          <div class="col-md-4 d-flex flex-column gap-4">
             <div class="info-item">
               <font-awesome-icon
                 icon="venus-mars"
@@ -65,6 +60,9 @@
                 <span class="info-value text-muted">{{ gender || "N/A" }}</span>
               </div>
             </div>
+          </div>
+
+          <div class="col-md-6 d-flex flex-column gap-3">
             <div class="info-item">
               <font-awesome-icon
                 icon="phone"
@@ -78,9 +76,6 @@
                 }}</span>
               </div>
             </div>
-          </div>
-
-          <div class="col-md-4 d-flex flex-column gap-4">
             <div class="info-item">
               <font-awesome-icon
                 icon="calendar-alt"
@@ -110,14 +105,25 @@
           </div>
         </section>
 
-        <div class="text-center mt-5 position-relative">
-          <router-link
-            :to="{ name: 'docgia.edit' }"
-            class="btn btn-dark w-100 rounded-pill fw-semibold shadow-sm btn-edit"
-          >
-            <font-awesome-icon icon="edit" class="me-2" />
-            Sửa thông tin
-          </router-link>
+        <div class="row g-2 mt-4 position-relative">
+          <div class="col-12 col-sm-6">
+            <router-link
+              :to="{ name: 'docgia.edit' }"
+              class="btn btn-dark w-100 rounded-pill fw-semibold shadow-sm btn-edit"
+            >
+              <font-awesome-icon icon="edit" class="me-2" />
+              Sửa thông tin
+            </router-link>
+          </div>
+          <div class="col-12 col-sm-6">
+            <router-link
+              :to="{ name: 'change-password' }"
+              class="btn btn-outline-dark w-100 rounded-pill fw-semibold shadow-sm btn-edit"
+            >
+              <font-awesome-icon icon="lock" class="me-2" />
+              Đổi mật khẩu
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -137,6 +143,7 @@ import {
   faCalendarAlt,
   faEdit,
   faUserCircle,
+  faLock,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -147,7 +154,8 @@ library.add(
   faMapMarkerAlt,
   faCalendarAlt,
   faEdit,
-  faUserCircle
+  faUserCircle,
+  faLock
 );
 
 const user = ref({});
@@ -247,7 +255,7 @@ function formattedDate(dateStr) {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
+  padding: 0.75rem; /* Giảm padding */
   border-radius: 0.75rem;
   background-color: var(--card-bg);
   box-shadow: var(--shadow-sm);

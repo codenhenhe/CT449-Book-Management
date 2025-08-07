@@ -18,6 +18,14 @@
             Vui lòng nhập thông tin để tiếp tục
           </p>
           <LoginForm />
+          <div class="text-center mt-3">
+            <RouterLink
+              to="/forgot-password"
+              class="text-decoration-none text-primary"
+            >
+              Quên mật khẩu?
+            </RouterLink>
+          </div>
         </div>
       </div>
     </div>

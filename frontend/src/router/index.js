@@ -37,9 +37,13 @@ const routes = [
   // ===== Admin Layout & Pages =====
   {
     path: "/admin",
-    component: () => import("@/layouts/AdminLayout.vue"),
     meta: requireAuth("quantrivien"),
     children: [
+      {
+        path: "",
+        name: "quantrivien",
+        component: () => import("@/layouts/AdminLayout.vue"),
+      },
       {
         path: "profile",
         name: "quantrivien.profile",
@@ -56,9 +60,13 @@ const routes = [
   // ===== Staff Layout & Pages =====
   {
     path: "/staff",
-    component: () => import("@/layouts/StaffLayout.vue"),
     meta: requireAuth("nhanvien"),
     children: [
+      {
+        path: "",
+        name: "nhanvien",
+        component: () => import("@/layouts/StaffLayout.vue"),
+      },
       {
         path: "profile",
         name: "nhanvien.profile",
@@ -168,6 +176,24 @@ const routes = [
         meta: requireAuth(["nhanvien"]),
       },
     ],
+  },
+
+  {
+    path: "/change-password",
+    name: "change-password",
+    component: () => import("@/views/ChangePassword.vue"),
+    meta: requireAuth(["docgia", "nhanvien", "quantrivien"]),
+  },
+
+  {
+    path: "/reset-password/:token",
+    name: "reset-password",
+    component: () => import("@/views/ResetPassword.vue"),
+  },
+  {
+    path: "/forgot-password",
+    name: "forgot-password",
+    component: () => import("@/views/ForgotPassword.vue"),
   },
 
   // ===== Not Found =====

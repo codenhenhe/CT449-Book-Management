@@ -1,7 +1,8 @@
-admin: NVBA5YUI8 - matkhau
+admin: NVBA5YUI8 - quantrivien
 
 
-reader: DGLPHKMR0 - tu123
+reader: DGLPHKMR0 - docgia
+	DGHJV16S6 - docgia1
 
 
-staff: NVFEORGR2 - 123456
+staff: NVFEORGR2 - nhanvien

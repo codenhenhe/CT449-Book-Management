@@ -1,5 +1,5 @@
 <template>
-  <main class="content-area">
+  <main>
     <div class="container mt-4">
       <h2 class="mb-4">👋 Chào mừng, {{ user.name || "Nhân viên" }}</h2>
 
@@ -115,12 +115,12 @@ function formatDate(dateStr) {
 </script>
 
 <style scoped>
-.content-area {
+/* .content-area {
   margin-left: 220px;
   padding: 1rem;
   min-height: calc(100vh - 120px);
   transition: margin-left 0.3s ease;
-}
+} */
 
 .card {
   border-radius: 0.5rem;

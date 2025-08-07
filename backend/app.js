@@ -9,6 +9,7 @@ import CategoryRoute from "./app/routes/category.routes.js";
 import AuthorRoutes from "./app/routes/author.route.js";
 import PublisherRoutes from "./app/routes/publisher.route.js";
 import BorrowRoute from "./app/routes/borrow.route.js";
+import AuthRoute from "./app/routes/auth.route.js";
 import { login } from "./app/controllers/login.controller.js";
 
 const app = express();
@@ -23,6 +24,7 @@ app.use("/api/categories", CategoryRoute);
 app.use("/api/authors", AuthorRoutes);
 app.use("/api/publishers", PublisherRoutes);
 app.use("/api/borrows", BorrowRoute);
+app.use("/api/password", AuthRoute);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to book management application." });
