@@ -60,6 +60,19 @@
                 <span class="info-value text-muted">{{ gender || "N/A" }}</span>
               </div>
             </div>
+            <div class="info-item">
+              <font-awesome-icon
+                icon="envelope"
+                class="info-icon text-dark-theme"
+                aria-hidden="true"
+              />
+              <div class="info-content">
+                <span class="info-label">Email</span>
+                <span class="info-value text-muted">{{
+                  user.email || "N/A"
+                }}</span>
+              </div>
+            </div>
           </div>
 
           <div class="col-md-6 d-flex flex-column gap-3">
@@ -144,6 +157,7 @@ import {
   faEdit,
   faUserCircle,
   faLock,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -155,7 +169,8 @@ library.add(
   faCalendarAlt,
   faEdit,
   faUserCircle,
-  faLock
+  faLock,
+  faEnvelope
 );
 
 const user = ref({});
@@ -255,7 +270,7 @@ function formattedDate(dateStr) {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem; /* Giảm padding */
+  padding: 0.75rem;
   border-radius: 0.75rem;
   background-color: var(--card-bg);
   box-shadow: var(--shadow-sm);

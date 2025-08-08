@@ -57,6 +57,13 @@
       to="/borrows/manager"
       :active="route.path === '/borrows/manager'"
     />
+    <SidebarItem
+      v-if="isAdmin"
+      icon="fa-user"
+      text="Người dùng"
+      to="/admin/users"
+      :active="route.path === '/admin/users'"
+    />
   </nav>
 </template>
 
@@ -74,6 +81,7 @@ const isStaffOrAdmin = computed(() =>
 );
 const isReader = computed(() => auth.user?.vaiTro === "docgia");
 const isStaff = computed(() => auth.user?.vaiTro === "nhanvien");
+const isAdmin = computed(() => auth.user?.vaiTro === "quantrivien");
 
 const homeRoute = computed(() => {
   switch (auth.user?.vaiTro) {

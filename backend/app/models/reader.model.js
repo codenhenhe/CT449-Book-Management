@@ -44,6 +44,7 @@ const readerSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   // anhDaiDien: {
   //   type: String,

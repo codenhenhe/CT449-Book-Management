@@ -6,10 +6,6 @@ class StaffService {
     this.api = createApiClient(baseUrl);
   }
 
-  // async getAllStaffs() {
-  //   return (await this.api.get("/staffs", { headers: authHeader() })).data;
-  // }
-
   async update(id, data) {
     return (await this.api.put(`/profile/${id}`, data, authHeader())).data;
   }

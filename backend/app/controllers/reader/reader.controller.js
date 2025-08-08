@@ -21,8 +21,10 @@ export const getMe = async (req, res, next) => {
 
 export const updateMe = async (req, res, next) => {
   try {
+    console.log("📌 ID:", req.params.id);
+    console.log("📌 Body:", req.body);
     const reader = await updateReader(req.params.id, req.body);
-    console.log(reader);
+    // console.log(reader);
 
     if (!reader) {
       return next(new ApiError(404, "Không tìm thấy đọc giả."));

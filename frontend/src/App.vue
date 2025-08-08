@@ -27,9 +27,15 @@ export default {
   },
   computed: {
     showToolbar() {
-      // Không hiển thị Toolbar nếu route là login hoặc register
-      const hiddenRoutes = ["/login", "/register", "/forgot-password"];
-      return !hiddenRoutes.includes(this.$route.path);
+      const hiddenRoutesPatterns = [
+        /^\/login$/,
+        /^\/register$/,
+        /^\/forgot-password$/,
+        /^\/reset-password\/[^/]+$/,
+      ];
+      return !hiddenRoutesPatterns.some((pattern) =>
+        pattern.test(this.$route.path)
+      );
     },
   },
 };

@@ -61,6 +61,7 @@ export const login = async (req, res) => {
         id: user._id,
         hoLot: user.hoLot,
         ten: user.ten,
+        email: user.email,
         phai: user.phai,
         maSo: role === "docgia" ? user.maDocGia : user.maNhanVien,
         soDienThoai: user.soDienThoai,

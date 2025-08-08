@@ -29,9 +29,9 @@
               <Field
                 name="tenTacGia"
                 class="form-control"
-                :value="form.tenTacGia"
-                @input="form.tenTacGia = $event"
+                v-model="form.tenTacGia"
               />
+
               <ErrorMessage name="tenTacGia" class="text-danger small" />
             </div>
 
@@ -115,6 +115,8 @@ const schema = yup.object({
 
 async function handleSubmit() {
   try {
+    // console.log("ID cần cập nhật:", props.editingAuthor._id);
+    // console.log("Dữ liệu gửi đi:", form.tenTacGia);
     if (props.editingAuthor) {
       await AuthorService.update(props.editingAuthor._id, form);
       Swal.fire("Thành công", "Cập nhật tác giả thành công!", "success");

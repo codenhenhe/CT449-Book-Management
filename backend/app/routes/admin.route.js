@@ -18,15 +18,16 @@ import { verifyToken } from "../middlewares/auth.middleware.js";
 import { updateMe } from "../controllers/admin/profile.controller.js";
 const router = express.Router();
 
-// router.post("/login", login);
-
 // Các route cần đăng nhập mới truy cập được
 router.route("/profile/:id").put(verifyToken, updateMe);
 
-router.route("/staffs").get(getAllStaff).post(verifyToken, createUser);
+router
+  .route("/staffs")
+  .get(verifyToken, getAllStaff)
+  .post(verifyToken, createUser);
 
 router
-  .route("/staff/:id")
+  .route("/staffs/:id")
   .get(verifyToken, getStaffByID)
   .put(verifyToken, updateStaffController)
   .delete(verifyToken, deleteStaffController);
@@ -37,7 +38,7 @@ router
   .post(verifyToken, createUser);
 
 router
-  .route("/reader/:id")
+  .route("/readers/:id")
   .get(verifyToken, getReaderByID)
   .put(verifyToken, updateReaderController)
   .delete(verifyToken, deleteReaderController);

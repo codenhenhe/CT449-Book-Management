@@ -83,7 +83,6 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const auth = useAuthStore();
 
-// Lấy username (mã đăng nhập) để tránh cảnh báo autocomplete
 const username = computed(() => auth.user?.maSo || "");
 
 const form = reactive({

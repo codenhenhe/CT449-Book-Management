@@ -54,6 +54,24 @@ const routes = [
         name: "quantrivien.edit",
         component: () => import("@/views/admin/AdminEditProfile.vue"),
       },
+      {
+        path: "users",
+        name: "quantrivien.users",
+        component: () => import("@/components/UserManagement.vue"),
+        meta: requireAuth("quantrivien"),
+      },
+      {
+        path: "users/add",
+        name: "quantrivien.users.add",
+        component: () => import("@/components/UserForm.vue"),
+        meta: requireAuth("quantrivien"),
+      },
+      {
+        path: "users/edit/:id",
+        name: "quantrivien.users.edit",
+        component: () => import("@/components/UserForm.vue"),
+        meta: requireAuth("quantrivien"),
+      },
     ],
   },
 

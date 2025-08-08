@@ -61,7 +61,7 @@ import LoginForm from "@/components/LoginForm.vue";
 
 .image-side img {
   object-fit: cover;
-  filter: brightness(0.8); /* Làm tối ảnh nhẹ để chữ nổi hơn nếu cần */
+  filter: brightness(0.8);
 }
 
 .form-side {

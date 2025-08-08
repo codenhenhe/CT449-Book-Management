@@ -1,110 +1,115 @@
 <template>
-  <div class="add-book container mt-5">
-    <div class="card p-4 shadow-sm w-75 mx-auto">
-      <h2 class="card-title text-center mb-4">Thêm Sách Mới</h2>
+  <div class="add-book container mt-5 mb-5">
+    <div class="card p-4 shadow-lg w-100 mx-auto" style="max-width: 800px">
+      <h2 class="card-title text-center mb-4 fw-bold text-primary">
+        📚 Thêm Sách Mới
+      </h2>
       <form @submit.prevent="submitBook" class="needs-validation" novalidate>
-        <!-- Các trường văn bản -->
-        <div class="form-group mb-3">
-          <label for="tenSach" class="form-label fw-bold">Tên sách *</label>
-          <input
-            v-model="formData.tenSach"
-            id="tenSach"
-            class="form-control"
-            required
-          />
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="tenSach" class="form-label fw-bold">Tên sách *</label>
+            <input
+              v-model="formData.tenSach"
+              id="tenSach"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="donGia" class="form-label fw-bold">Đơn giá *</label>
+            <input
+              v-model.number="formData.donGia"
+              type="number"
+              class="form-control"
+              required
+            />
+          </div>
         </div>
 
-        <div class="form-group mb-3">
-          <label for="donGia" class="form-label fw-bold">Đơn giá *</label>
-          <input
-            v-model.number="formData.donGia"
-            type="number"
-            class="form-control"
-            required
-          />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="tongSoSach" class="form-label fw-bold"
-            >Tổng số sách *</label
-          >
-          <input
-            v-model.number="formData.tongSoSach"
-            type="number"
-            class="form-control"
-            required
-          />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="soQuyenConLai" class="form-label fw-bold"
-            >Số quyển còn lại *</label
-          >
-          <input
-            v-model.number="formData.soQuyenConLai"
-            type="number"
-            class="form-control"
-            required
-          />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="namXuatBan" class="form-label fw-bold"
-            >Năm xuất bản *</label
-          >
-          <input
-            v-model.number="formData.namXuatBan"
-            type="number"
-            class="form-control"
-            required
-          />
-        </div>
-
-        <!-- Nhà xuất bản -->
-        <div class="form-group mb-3">
-          <label for="maNXB" class="form-label fw-bold">Nhà xuất bản</label>
-          <select v-model="formData.maNXB" class="form-select">
-            <option value="">-- Chọn nhà xuất bản --</option>
-            <option v-for="pub in publishers" :key="pub._id" :value="pub._id">
-              {{ pub.tenNXB }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Tác giả -->
-        <div class="form-group mb-3">
-          <label for="maTacGia" class="form-label fw-bold">Tác giả</label>
-          <select v-model="formData.maTacGia" class="form-select">
-            <option value="">-- Chọn tác giả --</option>
-            <option
-              v-for="author in authors"
-              :key="author._id"
-              :value="author._id"
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="tongSoSach" class="form-label fw-bold"
+              >Tổng số sách *</label
             >
-              {{ author.tenTacGia }}
-            </option>
-          </select>
-        </div>
-
-        <!-- Thể loại -->
-        <div class="form-group mb-3">
-          <label for="tenTheLoai" class="form-label fw-bold"
-            >Thể loại sách</label
-          >
-          <select v-model="formData.tenTheLoai" class="form-select">
-            <option value="">-- Chọn thể loại --</option>
-            <option
-              v-for="cat in categories"
-              :key="cat._id"
-              :value="cat.tenTheLoai"
+            <input
+              v-model.number="formData.tongSoSach"
+              type="number"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="soQuyenConLai" class="form-label fw-bold"
+              >Số quyển còn lại *</label
             >
-              {{ cat.tenTheLoai }}
-            </option>
-          </select>
+            <input
+              v-model.number="formData.soQuyenConLai"
+              type="number"
+              class="form-control"
+              required
+            />
+          </div>
         </div>
 
-        <!-- Ảnh bìa -->
-        <div class="form-group mb-3">
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="namXuatBan" class="form-label fw-bold"
+              >Năm xuất bản *</label
+            >
+            <input
+              v-model.number="formData.namXuatBan"
+              type="number"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="tenTheLoai" class="form-label fw-bold mr-2"
+              >Thể loại sách</label
+            >
+            <select v-model="formData.tenTheLoai" class="form-select">
+              <option value="">-- Chọn thể loại --</option>
+              <option
+                v-for="cat in categories"
+                :key="cat._id"
+                :value="cat.tenTheLoai"
+              >
+                {{ cat.tenTheLoai }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="maNXB" class="form-label fw-bold mr-2"
+              >Nhà xuất bản</label
+            >
+            <select v-model="formData.maNXB" class="form-select">
+              <option value="">-- Chọn nhà xuất bản --</option>
+              <option v-for="pub in publishers" :key="pub._id" :value="pub._id">
+                {{ pub.tenNXB }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="maTacGia" class="form-label fw-bold mr-2"
+              >Tác giả</label
+            >
+            <select v-model="formData.maTacGia" class="form-select">
+              <option value="">-- Chọn tác giả --</option>
+              <option
+                v-for="author in authors"
+                :key="author._id"
+                :value="author._id"
+              >
+                {{ author.tenTacGia }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group mb-4">
           <label for="image" class="form-label fw-bold"
             >Chọn ảnh bìa sách</label
           >
@@ -115,45 +120,37 @@
             accept="image/*"
             class="form-control"
           />
-          <div v-if="formData.hinhAnh" class="mt-2">
-            <p class="mb-1">Xem trước:</p>
+          <div v-if="formData.hinhAnh" class="mt-2 text-center">
+            <p class="mb-1 text-muted">Ảnh xem trước:</p>
             <img
               :src="formData.hinhAnh"
-              alt="preview"
+              alt="Ảnh bìa sách"
               class="img-thumbnail"
-              style="max-width: 200px"
+              style="max-width: 250px; border-radius: 8px"
             />
-          </div>
-          <div v-if="uploading" class="mt-2 text-muted">
-            <em>Đang tải ảnh lên...</em>
           </div>
         </div>
 
-        <!-- Nút submit -->
-        <div class="text-center mx-auto">
-          <div class="btn-group" style="display: flex; justify-content: center">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              :disabled="uploading"
-              style="min-width: 120px"
-            >
-              <span
-                v-if="uploading"
-                class="spinner-border spinner-border-sm mr-2"
-                role="status"
-              ></span>
-              Thêm sách
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary ml-5"
-              @click="goBack"
-              style="min-width: 120px"
-            >
-              Quay lại
-            </button>
-          </div>
+        <div class="d-flex justify-content-center gap-3">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg mr-2"
+            :disabled="uploading"
+          >
+            <span
+              v-if="uploading"
+              class="spinner-border spinner-border-sm mr-2"
+              role="status"
+            ></span>
+            <i v-else class="fas fa-plus"></i> Thêm sách
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary btn-lg ml-2"
+            @click="goBack"
+          >
+            <i class="fas fa-arrow-left"></i> Quay lại
+          </button>
         </div>
       </form>
     </div>
@@ -204,12 +201,27 @@ export default {
         this.publishers = await PublisherService.getAll();
       } catch (err) {
         console.error("Lỗi khi tải dữ liệu dropbox:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Lỗi",
+          text: "Không thể tải dữ liệu từ server. Vui lòng thử lại sau.",
+        });
       }
     },
     async uploadImage(event) {
       const file = event.target.files[0];
       if (!file) return;
+
       this.uploading = true;
+      const loadingAlert = Swal.fire({
+        title: "Đang tải ảnh lên...",
+        text: "Vui lòng chờ trong giây lát.",
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
 
       const uploadFormData = new FormData();
       uploadFormData.append("file", file);
@@ -232,12 +244,25 @@ export default {
         if (data.error) throw new Error(data.error.message);
 
         this.formData.hinhAnh = data.secure_url;
+        loadingAlert.close();
+        Swal.fire({
+          icon: "success",
+          title: "Tải ảnh lên thành công!",
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
       } catch (err) {
+        loadingAlert.close();
         Swal.fire({
           icon: "error",
           title: "Lỗi upload ảnh",
           text: err.message,
         });
+        this.formData.hinhAnh = "";
+        event.target.value = null; // Reset input file
       } finally {
         this.uploading = false;
       }
@@ -266,17 +291,19 @@ export default {
         Swal.fire({
           icon: "success",
           title: "Thêm sách thành công!",
+          text: "Bạn đã thêm sách mới vào thư viện.",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2500,
+        }).then(() => {
+          this.resetForm();
+          this.router.push("/books");
         });
-
-        this.resetForm();
       } catch (error) {
         console.error(error);
         Swal.fire({
           icon: "error",
           title: "Thêm sách thất bại",
-          text: "Vui lòng kiểm tra lại thông tin.",
+          text: "Vui lòng kiểm tra lại thông tin. Đảm bảo các trường bắt buộc đã được điền đầy đủ.",
         });
       }
     },
@@ -292,6 +319,8 @@ export default {
         tenTheLoai: "",
         hinhAnh: "",
       };
+      // Reset input file
+      document.getElementById("image").value = "";
     },
     goBack() {
       this.router.back();
@@ -302,11 +331,17 @@ export default {
 
 <style scoped>
 .card {
-  border-radius: 10px;
+  border-radius: 15px;
 }
-.btn-group .btn {
-  flex: 1;
-  min-width: 120px;
-  max-width: 200px;
+.card-title {
+  border-bottom: 2px solid #0d6efd;
+  padding-bottom: 10px;
+}
+.form-label {
+  color: #343a40;
+}
+.btn-lg {
+  padding: 10px 20px;
+  font-size: 1.1rem;
 }
 </style>

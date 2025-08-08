@@ -57,10 +57,10 @@ async function handleLogin() {
     // Điều hướng theo vai trò
     switch (data.user.vaiTro) {
       case "quantrivien":
-        router.push({ name: "quantrivien.profile" });
+        router.push({ name: "quantrivien" });
         break;
       case "nhanvien":
-        router.push({ name: "nhanvien.profile" });
+        router.push({ name: "nhanvien" });
         break;
       case "docgia":
         router.push({ name: "books" });

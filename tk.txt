@@ -1,8 +1,7 @@
-admin: NVBA5YUI8 - quantrivien
+admin: NV9QKH3X2 - quantrivien
 
 
-reader: DGLPHKMR0 - docgia
-	DGHJV16S6 - docgia1
+reader: DG136V4GM - docgia1
 
 
-staff: NVFEORGR2 - nhanvien
+staff: NVZ6Q0TFL - nhanvien

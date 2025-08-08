@@ -10,7 +10,6 @@ const authorSchema = new Schema({
   maTacGia: {
     type: String,
     default: () => `TG${nanoid()}`,
-    required: true,
   },
   tenTacGia: {
     type: String,
